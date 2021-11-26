@@ -4,5 +4,4 @@
 void print_array(size_t, uint32_t *);
 bool sorted(size_t, const uint32_t *);
 void test_sort(void (*)(size_t, uint32_t *), size_t, size_t);
-void compare_sort(void (*)(size_t, uint32_t *));
-
+void test_dec(void (*)(size_t, uint32_t *), size_t, size_t);

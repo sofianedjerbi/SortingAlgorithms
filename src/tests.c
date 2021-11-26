@@ -31,48 +31,58 @@ bool sorted(size_t len, const uint32_t *t) {
 /* Sort a random list and increment the size at each iteration
  * Synopsis: Benchmarking 
  * Params: 
- *  - sort: sorting func (pointer)
+ *  - csort: sorting func (pointer)
  *  - max_length: maximum length of the list 
  *  - inc: incrementation at each iteration */
-void test_sort(void (*sort)(size_t, uint32_t *), 
+void test_sort(void (*csort)(size_t, uint32_t *), 
                    size_t max_length, size_t inc) {
     clock_t start, end;
     double time;
-    for (size_t d=0; d <= max_length; d+=inc){
-        uint32_t t[d];  // Random list
-        for (size_t i=0; i <= d; i++) // Init p
+    for (size_t d=inc; d <= max_length; d+=inc){
+        uint32_t *t = malloc(sizeof(uint32_t)*d);  // Random list
+        for (size_t i=0; i < d; i++) // Init the array
             t[i] = rand_number(0, d*2);
         start = clock();
-        (*sort)(d, t); // We multiply here
+        (*csort)(d, t); // We multiply here
         end = clock();
+        if (!sorted(d, t)) {
+            printf("Error on list of size %zu: ", d);
+            print_array(d, t);
+        }
+        free(t);
         time = ((double)(end-start))/CLOCKS_PER_SEC;
         printf("Time for size %zu: %lf\n", d, time);
     }
 }
 
-/* Compute the square of the polynomial nX^n + ... + 0
- * From degree 1 to degree 1000 and compare with mulpu. 
- * Synopsis: Check if the sorting algorithm is correct */ 
-void compare_sort(void (*sort)(size_t, uint32_t *)) {
-    printf("Beginning test\n");
-    for (size_t d=0; d <= 2; d++) {
-        uint32_t t[d];  // random list
-        uint32_t c[d];  // copy of random list
-        for (size_t i=0; i <= d; i++) { // Initialize p
-            t[i] = rand_number(0, 2*d);
-            c[i] = t[i];
-        }
-        (*sort)(d, t); // We multiply here
-        print_array(d, t);
-        print_array(d, c);
-        if (!sorted(d, t)){
-            printf("ERROR\n");
-            printf("list:  ");
-            print_array(d, c);
-            printf("sorted list:     "); // Error
+
+/* Sort a list in decreasing order and increment the size at each iteration
+ * Synopsis: Benchmarking 
+ * Params: 
+ *  - csort: sorting func (pointer)
+ *  - max_length: maximum length of the list 
+ *  - inc: incrementation at each iteration */
+void test_dec(void (*csort)(size_t, uint32_t *), 
+                   size_t max_length, size_t inc) {
+    clock_t start, end;
+    double time;
+    for (size_t d=inc; d <= max_length; d+=inc){
+        uint32_t *t = malloc(sizeof(uint32_t)*d);  // Random list
+        for (size_t i=0; i < d; i++) // Init the array
+            t[i] = d-i;
+        start = clock();
+        (*csort)(d, t); // We multiply here
+        end = clock();
+        if (!sorted(d, t)) {
+            printf("Error on list of size %zu: ", d);
             print_array(d, t);
         }
+        free(t);
+        time = ((double)(end-start))/CLOCKS_PER_SEC;
+        printf("Time for size %zu (dec): %lf\n", d, time);
     }
-    printf("End test\n");
 }
+
+
+
 
