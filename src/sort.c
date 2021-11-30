@@ -16,14 +16,11 @@ void swap(uint32_t *a, uint32_t *b) {
 
 // cpyswap: Swap any values
 void cpyswap(void *a, void *b, size_t size) {
-    // store element byte per byte
-    void *buffer = malloc(size); // act like a temp var
-    // copy content into buffer 
-    memcpy(buffer, a, size);
-    // Exchange values
+    void *temp = malloc(size); // Variable temporaire pour échanger les valeurs
+    memcpy(temp, a, size);
     memcpy(a, b, size);
-    memcpy(b, buffer, size);
-    free(buffer);
+    memcpy(b, temp, size);
+    free(temp);
 }
 
 
@@ -59,7 +56,7 @@ void qsorth(size_t len, uint32_t *t) {
     size_t r = rand() % len;
     uint32_t x = t[r];
     size_t n = len-1;
-    swap(t + r, t + len - 1);
+    swap(t + r, t + n);
     for (size_t i=len; i >= 1; --i) {
         if (t[i-1]>x){
             t[n] = t[i-1];
@@ -78,12 +75,13 @@ void qsortg(void *t, size_t len, size_t size,
            int (*compare)(const void*, const void*)) {
     if (len <= 1)
         return;
-    void *x = t + (rand() % len)*size;
+    size_t r = rand() % len;
+    void *x = t + r*size;
     size_t n = len-1;
-    cpyswap(x, t + (len-1) * size, size);
-    for (size_t i=len; i>=1;--i){
+    cpyswap(t + r*size, t + n*size, size);
+    for (size_t i=len; i >= 1; --i) {
         void *elem = t + (i-1) * size;
-        if (compare(t + (i-1)*size, x) > 0){ // compare(a,b) > 0 if a > b
+        if (compare(elem, x) > 0){ // compare(a,b) > 0 if a > b
             memcpy(t + n * size, elem, size);
             memcpy(elem, t + (n-1) * size, size);
             n--;
@@ -91,5 +89,6 @@ void qsortg(void *t, size_t len, size_t size,
     }
     memcpy(t + n*size, x, size);
     qsortg(t, n, size, compare);
-    qsortg(t + (n + 1)*size, (len-n-1)*size, size, compare);
+    qsortg(t + (n + 1)*size, len-n-1, size, compare);
 }
+
