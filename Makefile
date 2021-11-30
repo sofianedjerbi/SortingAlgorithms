@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-O2
+CFLAGS=-O2 -g
 LDFLAGS=-lm
 EXEC=out
 

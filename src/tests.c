@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "sort.h"
 #include "tests.h"
 
 
@@ -83,6 +84,21 @@ void test_dec(void (*csort)(size_t, uint32_t *),
     }
 }
 
+/* > 0 if a > b, 0 if a == b, < 0 if a < b */
+int compare_u32(const void *a, const void *b){
+    const uint32_t *ua = (uint32_t *)a;
+    const uint32_t *ub = (uint32_t *)b;
+    if (*ua > *ub)
+        return 1;
+    else if (*ua < *ub)
+        return -1;
+    else
+        return 0;
+}
 
+/* Call qsortg on a uint32_t array */
+void qsortg_wrapper(size_t len, uint32_t *t) {
+    qsortg(t, len, sizeof(uint32_t), compare_u32);
+}
 
 
