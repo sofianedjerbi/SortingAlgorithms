@@ -76,9 +76,9 @@ void qsortg(void *t, size_t len, size_t size,
     if (len <= 1)
         return;
     size_t r = rand() % len;
-    void *x = t + r*size;
     size_t n = len-1;
     cpyswap(t + r*size, t + n*size, size);
+    void *x = t + n*size;
     for (size_t i=len; i >= 1; --i) {
         void *elem = t + (i-1) * size;
         if (compare(elem, x) > 0){ // compare(a,b) > 0 if a > b
