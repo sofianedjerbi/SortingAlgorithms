@@ -114,14 +114,14 @@ void denomsort(size_t len, uint32_t *t, uint32_t max) {
 
 /* Sort an array of 32 bit integer via counting sort BUT
  * only considering b bits in position n, n+1, ..., n+b 
- * (Starting from the left). And t[i] < 2^max */
-void bit_denomsort(size_t len, uint32_t *t, size_t b, size_t n, size_t max) {
+ * (Starting from the left). */
+void bit_denomsort(size_t len, uint32_t *t, size_t b, size_t n) {
     // Mask for extracting bytes
     uint32_t mask = (1 << b) - 1; // b times "1"
     // Constant shift applied to all numbers
     uint32_t shift = n*b;
     // Creating the counting tab and init it to 0
-    uint32_t *count = calloc((1 << max) + 1, sizeof(uint32_t)); 
+    uint32_t *count = calloc(mask + 1, sizeof(uint32_t)); 
     // Output array
     uint32_t *output = malloc(sizeof(uint32_t) * len); 
     // Counting values
@@ -129,7 +129,7 @@ void bit_denomsort(size_t len, uint32_t *t, size_t b, size_t n, size_t max) {
         uint32_t j = (t[i] << shift) & mask; 
         count[j]++;
     }
-    for (size_t i=1; i <= (1 << max); i++)
+    for (size_t i=1; i <= mask; i++)
         count[i] += count[i-1];
    // Sorting the array 
     for (size_t i=len; i >= 1; --i) {
@@ -150,6 +150,6 @@ void radixsort(size_t len, uint32_t *t, size_t b, size_t max) {
     size_t nlen = max/b;
     nlen += max % b == 0 ? 0 : 1; // Check if remainder exists
     for (size_t i=0; i < nlen; i++)
-        bit_denomsort(len, t, b, i, max);
+        bit_denomsort(len, t, b, i);
 }
 
