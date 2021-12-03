@@ -7,46 +7,46 @@ from matplotlib import pyplot as plt
 figs = (
     ( # Fig1: Qsort vs random qsort on decreasing samples
         "decreasing_issue",
-        (["-qrd", "0", "100000", "5000", "24"], 
+        (["-qrd", "0", "100_000", "5_000", "24"], 
          "Quicksort (pivot = random)", "g"),
-        (["-qud", "0", "100000", "5000", "24"], 
+        (["-qud", "0", "100_000", "5_000", "24"], 
          "Quicksort (pivot = last)", "r"),
     ),
     ( # Fig2: native qsort vs qsortg vs qsort random
         "native_and_polymorphism",
-        (["-qr", "0", "12000000", "500000", "24"], 
+        (["-qr", "0", "20_000_000", "1_000_000", "24"], 
          "Quicksort on u32", "g"),
-        (["-qc", "0", "12000000", "500000", "24"], 
+        (["-qc", "0", "20_000_000", "1_000_000", "24"], 
          "Native polymorph quicksort", "b"),
-        (["-qg", "0", "12000000", "500000", "24"], 
+        (["-qg", "0", "20_000_000", "1_000_000", "24"], 
          "Handmade polymorph quicksort", "r"),
     ),
     ( # Fig3: radixsort in different basis
         "radixsort_basis",
-        (["-rx", "0", "10000000", "500000", "24", "2"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "2"], 
          "Radixsort, basis 2", "aqua"),
-        (["-rx", "0", "10000000", "500000", "24", "3"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "3"], 
          "Radixsort, basis 3", "green"),
-        (["-rx", "0", "10000000", "500000", "24", "4"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "4"], 
          "Radixsort, basis 4", "purple"),
-        (["-rx", "0", "10000000", "500000", "24", "6"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "6"], 
          "Radixsort, basis 6", "slategrey"),
-        (["-rx", "0", "10000000", "500000", "24", "8"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "8"], 
          "Radixsort, basis 8", "blue"),
-        (["-rx", "0", "10000000", "500000", "24", "12"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "12"], 
          "Radixsort, basis 12", "magenta"),
-        (["-rx", "0", "10000000", "500000", "24", "24"], 
+        (["-rx", "0", "20_000_000", "1_000_000", "24", "24"], 
          "Radixsort, basis 24", "black"),
-        (["-cs", "0", "10000000", "500000", "24"], 
+        (["-cs", "0", "20_000_000", "1_000_000", "24"], 
          "Counting sort", "red"),
     ),
     ( # Fig4: qsort vs radixsort vs counting sort
         "native_and_polymorphism",
-        (["-qr", "0", "500000000", "10000000", "24"], 
+        (["-qr", "0", "500_000_000", "10_000_000", "24"], 
          "Quicksort on u32", "g"),
-        (["-rx", "0", "500000000", "10000000", "24", "8"], 
+        (["-rx", "0", "500_000_000", "10_000_000", "24", "8"], 
          "Radixsort", "b"),
-        (["-cs", "0", "500000000", "10000000", "24"], 
+        (["-cs", "0", "500_000_000", "10_000_000", "24"], 
          "Counting sort", "r"),
     ),
 
@@ -55,6 +55,7 @@ figs = (
 # Plot performance chart and export it to a png
 def plot_performances(option, name, color):
     xi, yi = [], [] # x and y data for the chart
+    option = [o.replace("_", "") for o in option]
     out = subprocess.check_output(["./out"] + option)
     # Parsing data
     for line in out.splitlines():
