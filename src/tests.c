@@ -102,7 +102,7 @@ void test_radix(size_t b, size_t min, size_t max, size_t inc, size_t pow) {
     for (size_t d=min; d <= max; d+=inc){
         uint32_t *t = malloc(sizeof(uint32_t)*d); // Test array
         for (size_t i=0; i < d; i++) // Init the array
-            t[i] = rand_number(0, (1 << pow)); 
+            t[i] = rand_number(0, (1 << pow)-1); 
         start = clock();
         radixsort(d, t, b, pow);
         end = clock();
