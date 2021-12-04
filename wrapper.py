@@ -73,7 +73,7 @@ def plot_performances(option, name, color):
         print(line)
         data = line.split()
         # Getting x and y values
-        x = int(data[-2][:-1])/1000
+        x = int(data[-2][:-1])
         y = float(data[-1])
         xi.append(x)
         yi.append(y)
