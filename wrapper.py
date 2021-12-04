@@ -5,13 +5,13 @@ from scipy import interpolate
 from matplotlib import pyplot as plt
 
 figs = (
-    ( # Fig1: Qsort vs random qsort on decreasing samples
-        "decreasing_issue",
-        (["-qrd", "0", "500_000", "50_000", "24"], 
-         "Quicksort (pivot = random)", "g"),
-        (["-qud", "0", "500_000", "50_000", "24"], 
-         "Quicksort (pivot = last)", "r"),
-    ),
+     ( # Fig1: Qsort vs random qsort on decreasing samples
+         "decreasing_issue",
+         (["-qrd", "0", "500_000", "50_000", "24"], 
+          "Quicksort (pivot = random)", "g"),
+         (["-qud", "0", "500_000", "50_000", "24"], 
+          "Quicksort (pivot = last)", "r"),
+     ),
      ( # Fig2: native qsort vs qsortg vs qsort random
          "native_and_polymorphism",
          (["-qr", "0", "50_000_000", "5_000_000", "24"], 
@@ -34,9 +34,9 @@ figs = (
          (["-rx", "0", "50_000_000", "5_000_000", "24", "8"], 
           "Radixsort, basis $2^8$", "blue"),
          (["-rx", "0", "50_000_000", "5_000_000", "24", "12"], 
-          "Radixsort, basis $2^12$", "magenta"),
+          "Radixsort, basis $2^{12}$", "magenta"),
          (["-rx", "0", "50_000_000", "5_000_000", "24", "24"], 
-          "Radixsort, basis $2^24$", "black"),
+          "Radixsort, basis $2^{24}$", "black"),
          (["-cs", "0", "50_000_000", "5_000_000", "24"], 
           "Counting sort", "red"),
      ),
